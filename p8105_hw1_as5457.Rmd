@@ -13,9 +13,9 @@ library (tidyverse)
 
 set.seed(1)
 
-rand_samp = tibble(
-  norm_samp = runif(10, min = 0, max = 5),
-  vector_logical = norm_samp > 2,
+prob1_df = tibble(
+  rand_samp = runif(10, min = 0, max = 5),
+  vector_logical = rand_samp > 2,
   vector_char = c('Hi', 'my', 'name', 'is', 'Sunny', 'and', 'I', 'love', 'chicken', 'wings'),
   vector_factor = factor(c('male', 'male', 'male', 'male', 'male', 'female', 'female', 'female', 'female', 'female'))
 )
@@ -23,23 +23,31 @@ rand_samp = tibble(
 
 ```
 ```{r checking_classes}
-class(rand_samp$vector_logical)
-class(rand_samp$vector_char)
-class(rand_samp$vector_factor)
+class(prob1_df$vector_logical)
+class(prob1_df$vector_char)
+class(prob1_df$vector_factor)
 ```
-```{r}
-mean (norm_samp)
-mean (vector_logical)
-mean (vector_char)
-mean (vector_factor)
+
+
+
+```{r eval=FALSE}
+data(prob1_df)
+mean(prob1_df[["rand_samp"]])
+mean(prob1_df[["vector_logical"]])
+mean(prob1_df[["vector_char"]])
+mean(prob1_df[["vector_factor"]])
 ```
+
 
 When taking the means of the variables, I was able to retrieve means of the random sample and logical vector. The character and factor vectors did not retrieve means because they are neither numeric, nor logical.
 
+
+
 ```{r}
-as.numeric(vector_logical)
-as.numeric(vector_char)
-as.numeric(vector_factor)
+data(prob1_df)
+as.numeric(prob1_df[["vector_logical"]])
+as.numeric(prob1_df[["vector_char"]])
+as.numeric(prob1_df[["vector_factor"]])
 ```
 When the logical vector was coerced into being numeric, the numeric conversion led to values that were false (<2) to be assigned a value of 0 and values that were true (>2) to be assigned a value of 1. 
 
@@ -47,6 +55,17 @@ When the character vector was coerced into being numeric, the numeric conversion
 
 When the factor vector was coereced into being numeric, the conversion led to males being assigned a value of 2 and females being assigned a value of 1. 
 
+In a second code chunk convert your character variable from character to factor to numeric; similarly, convert your factor variable from factor to character to numeric. What happens?
+
+```{r}
+as.factor(prob1_df[["vector_char"]])
+as.numeric(prob1_df[["vector_char"]])
+
+as.character(prob1_df[["vector_factor"]])
+as.numeric(prob1_df[["vector_factor"]])
+```
+
+When I convered the character variable from character to factor to numeric, the conversion failed. However, when I convered the factor variable from factor to character to numeric, I was able to retrieve the same numeric assignments that I had received when I converted my factor variable directly to numeric. 
 
 
 

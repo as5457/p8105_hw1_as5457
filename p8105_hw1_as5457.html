@@ -142,12 +142,50 @@ $(document).ready(function () {
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>set.seed(1)
 
-rand_samp = tibble(
-  norm_samp = runif(10, min = 0, max = 5),
-  vector_logical = norm_samp &gt; 2,
+prob1_df = tibble(
+  rand_samp = runif(10, min = 0, max = 5),
+  vector_logical = rand_samp &gt; 2,
   vector_char = c('Hi', 'my', 'name', 'is', 'Sunny', 'and', 'I', 'love', 'chicken', 'wings'),
   vector_factor = factor(c('male', 'male', 'male', 'male', 'male', 'female', 'female', 'female', 'female', 'female'))
 )</code></pre>
+<pre class="r"><code>class(prob1_df$vector_logical)</code></pre>
+<pre><code>## [1] &quot;logical&quot;</code></pre>
+<pre class="r"><code>class(prob1_df$vector_char)</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<pre class="r"><code>class(prob1_df$vector_factor)</code></pre>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
+<pre class="r"><code>data(prob1_df)
+mean(prob1_df[[&quot;rand_samp&quot;]])
+mean(prob1_df[[&quot;vector_logical&quot;]])
+mean(prob1_df[[&quot;vector_char&quot;]])
+mean(prob1_df[[&quot;vector_factor&quot;]])</code></pre>
+<p>When taking the means of the variables, I was able to retrieve means of the random sample and logical vector. The character and factor vectors did not retrieve means because they are neither numeric, nor logical.</p>
+<pre class="r"><code>data(prob1_df)</code></pre>
+<pre><code>## Warning in data(prob1_df): data set 'prob1_df' not found</code></pre>
+<pre class="r"><code>as.numeric(prob1_df[[&quot;vector_logical&quot;]])</code></pre>
+<pre><code>##  [1] 0 0 1 1 0 1 1 1 1 0</code></pre>
+<pre class="r"><code>as.numeric(prob1_df[[&quot;vector_char&quot;]])</code></pre>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre><code>##  [1] NA NA NA NA NA NA NA NA NA NA</code></pre>
+<pre class="r"><code>as.numeric(prob1_df[[&quot;vector_factor&quot;]])</code></pre>
+<pre><code>##  [1] 2 2 2 2 2 1 1 1 1 1</code></pre>
+<p>When the logical vector was coerced into being numeric, the numeric conversion led to values that were false (&lt;2) to be assigned a value of 0 and values that were true (&gt;2) to be assigned a value of 1.</p>
+<p>When the character vector was coerced into being numeric, the numeric conversion failed.</p>
+<p>When the factor vector was coereced into being numeric, the conversion led to males being assigned a value of 2 and females being assigned a value of 1.</p>
+<p>In a second code chunk convert your character variable from character to factor to numeric; similarly, convert your factor variable from factor to character to numeric. What happens?</p>
+<pre class="r"><code>as.factor(prob1_df[[&quot;vector_char&quot;]])</code></pre>
+<pre><code>##  [1] Hi      my      name    is      Sunny   and     I       love   
+##  [9] chicken wings  
+## Levels: and chicken Hi I is love my name Sunny wings</code></pre>
+<pre class="r"><code>as.numeric(prob1_df[[&quot;vector_char&quot;]])</code></pre>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre><code>##  [1] NA NA NA NA NA NA NA NA NA NA</code></pre>
+<pre class="r"><code>as.character(prob1_df[[&quot;vector_factor&quot;]])</code></pre>
+<pre><code>##  [1] &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;male&quot;   &quot;female&quot; &quot;female&quot;
+##  [8] &quot;female&quot; &quot;female&quot; &quot;female&quot;</code></pre>
+<pre class="r"><code>as.numeric(prob1_df[[&quot;vector_factor&quot;]])</code></pre>
+<pre><code>##  [1] 2 2 2 2 2 1 1 1 1 1</code></pre>
+<p>When I convered the character variable from character to factor to numeric, the conversion failed. However, when I convered the factor variable from factor to character to numeric, I was able to retrieve the same numeric assignments that I had received when I converted my factor variable directly to numeric.</p>
 </div>
 
 
