@@ -6,7 +6,6 @@ output: html_document
 ---
 
 # Problem 1
-Creating a data frame comprised of a random sample of size 10 from a uniform[0, 5] distribution
 
 
 ```{r random_sample}
@@ -15,18 +14,17 @@ library (tidyverse)
 set.seed(1)
 
 rand_samp = tibble(
-  norm_samp = rnorm(10, mean = 0, sd = 5)
+  norm_samp = runif(10, min = 0, max = 5),
+  vector_logical = norm_samp > 2,
+  vector_char = c('Hi', 'my', 'name', 'is', 'Sunny', 'and', 'I', 'love', 'chicken', 'wings'),
+  vector_factor = factor(c('male', 'male', 'male', 'male', 'male', 'female', 'female', 'female', 'female', 'female'))
 )
 
-rand_samp
+
 ```
 
 
-Creating a logical vector indicating whether elements of the sample are greater than 2
-```{r logic_vector}
-vector_logical_rand = rand_samp > 2
-vector_logical_rand
-```
+
 
 
 
