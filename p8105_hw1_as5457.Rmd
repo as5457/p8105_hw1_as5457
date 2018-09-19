@@ -93,9 +93,32 @@ prob2_df$num_xy = as.numeric(prob2_df[["logic_xy"]])
 prob2_df$fac_xy = as.factor(prob2_df[["logic_xy"]])
 ```
 
-Write a short description of your vector using inline R code, including: the size of the dataset, the mean and median of x, the proportion of cases for which the logical vector is true.
+##Write a short description of your vector using inline R code, including: the size of the dataset, the mean and median of x, the proportion of cases for which the logical vector is true.
 
 The size of the dataset is `r nrow(prob2_df)`. The mean of the variable x is `r mean(prob2_df[["x"]])` and median of variable x is `r round(median(prob2_df$x))`. The proportion of cases for which the logical vector is true is `r mean(prob2_df$num_xy)`.
+
+
+##Make a scatterplot of y vs x; color points using the logical variable (adding color = ... inside of aes in your ggplot code should help). Make a second and third scatterplot that color points using the numeric and factor variables, respectively, and comment on the color scales.
+
+```{r}
+library(ggplot2)
+color_xy = ggplot(prob2_df, aes(x = x, y = y, color= 'red')) + geom_point()
+color_xy
+
+```
+
+```{r}
+color_numeric = ggplot(prob2_df, aes(x = x, y = y, color= num_xy)) + geom_point()
+color_numeric
+color_factor = ggplot(prob2_df, aes(x = x, y = y, color= fac_xy)) + geom_point()
+color_factor
+```
+
+
+
+
+
+
 
 
 
