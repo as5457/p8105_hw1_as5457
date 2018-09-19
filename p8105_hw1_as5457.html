@@ -170,7 +170,7 @@ mean(prob1_df[[&quot;vector_factor&quot;]])</code></pre>
 <pre class="r"><code>as.numeric(prob1_df[[&quot;vector_factor&quot;]])</code></pre>
 <pre><code>##  [1] 2 2 2 2 2 1 1 1 1 1</code></pre>
 <p>When the logical vector was coerced into being numeric, the numeric conversion led to values that were false (&lt;2) to be assigned a value of 0 and values that were true (&gt;2) to be assigned a value of 1.</p>
-<p>When the character vector was coerced into being numeric, the numeric conversion failed.</p>
+<p>When the character vector was coerced into being numeric, the numeric conversion failed. This may be because there are no patterns in the character variables.</p>
 <p>When the factor vector was coereced into being numeric, the conversion led to males being assigned a value of 2 and females being assigned a value of 1.</p>
 <p>In a second code chunk convert your character variable from character to factor to numeric; similarly, convert your factor variable from factor to character to numeric. What happens?</p>
 <pre class="r"><code>as.factor(prob1_df[[&quot;vector_char&quot;]])</code></pre>
@@ -186,6 +186,25 @@ mean(prob1_df[[&quot;vector_factor&quot;]])</code></pre>
 <pre class="r"><code>as.numeric(prob1_df[[&quot;vector_factor&quot;]])</code></pre>
 <pre><code>##  [1] 2 2 2 2 2 1 1 1 1 1</code></pre>
 <p>When I convered the character variable from character to factor to numeric, the conversion failed. However, when I convered the factor variable from factor to character to numeric, I was able to retrieve the same numeric assignments that I had received when I converted my factor variable directly to numeric.</p>
+</div>
+<div id="problem-2" class="section level1">
+<h1>Problem 2</h1>
+<p>This problem focuses on plotting and the use of inline R code.</p>
+<p>Create a data frame comprised of: x: a random sample of size 1000 from a standard Normal distribution y: a random sample of size 1000 from a standard Normal distribution A logical vector indicating whether the x + y &gt; 0 A numeric vector created by coercing the above logical vector A factor vector created by coercing the above logical vector</p>
+<pre class="r"><code>set.seed (1)
+
+prob2_df = tibble(
+  x = rnorm (1000, mean = 0, sd = 1),
+  y = rnorm (1000, mean = 0, sd = 1),
+  logic_xy = (x + y &gt; 0)
+  #num_xy = as.numeric(prob2_df[[&quot;logic_xy&quot;]]),
+  #fac_xy = as.factor(prob2_df[[&quot;logic_xy&quot;]])
+)
+
+prob2_df$num_xy = as.numeric(prob2_df[[&quot;logic_xy&quot;]])
+prob2_df$fac_xy = as.factor(prob2_df[[&quot;logic_xy&quot;]])</code></pre>
+<p>Write a short description of your vector using inline R code, including: the size of the dataset, the mean and median of x, the proportion of cases for which the logical vector is true.</p>
+<p>The size of the dataset is 1000. The mean of the variable x is -0.0116481 and median of variable x is 0. The proportion of cases for which the logical vector is true is 0.49.</p>
 </div>
 
 
