@@ -22,8 +22,30 @@ rand_samp = tibble(
 
 
 ```
+```{r checking_classes}
+class(rand_samp$vector_logical)
+class(rand_samp$vector_char)
+class(rand_samp$vector_factor)
+```
+```{r}
+mean (norm_samp)
+mean (vector_logical)
+mean (vector_char)
+mean (vector_factor)
+```
 
+When taking the means of the variables, I was able to retrieve means of the random sample and logical vector. The character and factor vectors did not retrieve means because they are neither numeric, nor logical.
 
+```{r}
+as.numeric(vector_logical)
+as.numeric(vector_char)
+as.numeric(vector_factor)
+```
+When the logical vector was coerced into being numeric, the numeric conversion led to values that were false (<2) to be assigned a value of 0 and values that were true (>2) to be assigned a value of 1. 
+
+When the character vector was coerced into being numeric, the numeric conversion failed.
+
+When the factor vector was coereced into being numeric, the conversion led to males being assigned a value of 2 and females being assigned a value of 1. 
 
 
 
