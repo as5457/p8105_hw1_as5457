@@ -99,9 +99,11 @@ as.numeric(as.character(prob1_df[["vector_factor"]]))
 * When we converted the character variable to factor to numeric, each character variable was assigned a new number. 
 * When we converted the factor variable to character to numeric, the conversion failed because as seen previously, R is unable to convert character variables to numeric. 
 
--------------------------------------------------------------------------------------
+
 
 #Problem 2
+
+-------------------------------------------------------------------------------------
 
 **Create a data frame comprised of:**
 
