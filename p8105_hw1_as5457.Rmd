@@ -39,11 +39,11 @@ mean(prob1_df[["vector_factor"]])
 
 ```
 
-When taking the means of the variables, I was able to retrieve means of the random sample and logical vector. The character and factor vectors did not retrieve means because they are neither numeric, nor logical.
+When taking the means of the variables, I was able to retrieve means of the random sample and logical vector. The character and factor vectors did not retrieve means because they are neither numeric, nor logical. The mean function in R only takes the mean of numeric and logical vectors. Therefore, we were unable to compute the mean for the character and factor variables. 
 
 
 
-```{r}
+```{r eval = FALSE}
 data(prob1_df)
 as.numeric(prob1_df[["vector_logical"]])
 as.numeric(prob1_df[["vector_char"]])
@@ -58,14 +58,14 @@ When the factor vector was coereced into being numeric, the conversion led to ma
 In a second code chunk convert your character variable from character to factor to numeric; similarly, convert your factor variable from factor to character to numeric. What happens?
 
 ```{r}
-as.factor(prob1_df[["vector_char"]])
-as.numeric(prob1_df[["vector_char"]])
+as.numeric(as.factor(prob1_df[["vector_char"]]))
 
-as.character(prob1_df[["vector_factor"]])
-as.numeric(prob1_df[["vector_factor"]])
+as.numeric(as.character(prob1_df[["vector_factor"]]))
 ```
 
-When I convered the character variable from character to factor to numeric, the conversion failed. However, when I convered the factor variable from factor to character to numeric, I was able to retrieve the same numeric assignments that I had received when I converted my factor variable directly to numeric. 
+When we converted character to factor to numeric, each variable was assigned a new number. 
+Second one doesn't work because we can't convert character to numeric. 
+
 
 #Problem 2
 
@@ -95,14 +95,14 @@ prob2_df$fac_xy = as.factor(prob2_df[["logic_xy"]])
 
 ##Write a short description of your vector using inline R code, including: the size of the dataset, the mean and median of x, the proportion of cases for which the logical vector is true.
 
-The size of the dataset is `r nrow(prob2_df)`. The mean of the variable x is `r mean(prob2_df[["x"]])` and median of variable x is `r round(median(prob2_df$x))`. The proportion of cases for which the logical vector is true is `r mean(prob2_df$num_xy)`.
+The number of rows in this data frame is `r nrow(prob2_df)` and the number of columns in this data frame is `r ncol(prob2_df)`. The mean of the variable x is `r mean(prob2_df[["x"]])` and median of variable x is `r median(prob2_df$x)`. The proportion of cases for which the logical vector is true is `r mean(prob2_df$num_xy)`.
 
 
 ##Make a scatterplot of y vs x; color points using the logical variable (adding color = ... inside of aes in your ggplot code should help). Make a second and third scatterplot that color points using the numeric and factor variables, respectively, and comment on the color scales.
 
 ```{r}
 library(ggplot2)
-color_xy = ggplot(prob2_df, aes(x = x, y = y, color= 'red')) + geom_point()
+color_xy = ggplot(prob2_df, aes(x = x, y = y, color= logic_xy)) + geom_point()
 color_xy
 
 ```
@@ -115,6 +115,11 @@ color_factor
 ```
 
 
+Exporting first scatterplot using ggsave.
+
+```{r}
+ggsave("scatter_plot.pdf", plot = color_xy)
+```
 
 
 
