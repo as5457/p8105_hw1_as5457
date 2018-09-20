@@ -24,7 +24,7 @@ library (tidyverse)
 #Setting the seed to ensure we get the same data every time we run the code
 set.seed(1)
 
-#Creating a new data frame called "prob1_df" that contains the variables specified in the prompt.
+#Creating a data frame called "prob1_df" that contains the variables specified in the prompt.
 
 prob1_df = tibble(
   rand_samp = runif(10, min = 0, max = 5),
@@ -33,7 +33,11 @@ prob1_df = tibble(
   vector_factor = factor(c('male', 'male', 'male', 'male', 'male', 'female', 'female', 'female', 'female', 'female'))
 )
 
-#In the data frame above, rand_samp is a random sample of size 10 from a uniform[0, 5] distribution, vector_logical is indicating whether elements of the sample are greater than 2, vector_char is a 10 word long character variable and vector_factor is a variable containing 10 entries of the a factor variable, male or female. 
+#In the data frame above:
+  #rand_samp is a random sample of size 10 from a uniform[0, 5] distribution.
+  #vector_logical is indicating whether elements of the sample are greater than 2.
+  #vector_char is a 10 word long character variable.
+  #vector_factor is a variable containing 10 entries of the a factor variable, male or female. 
 
 ```
 
@@ -111,7 +115,7 @@ as.numeric(as.character(prob1_df[["vector_factor"]]))
 #Setting the seed to ensure reproducibility
 set.seed (1)
 
-#Creating data frame with the attributes specified in the prompt
+#Creating data frame called prob2_df with the attributes specified in the prompt
 prob2_df = tibble(
   x = rnorm (1000, mean = 0, sd = 1),
   y = rnorm (1000, mean = 0, sd = 1),
@@ -123,7 +127,11 @@ prob2_df = tibble(
 prob2_df$num_xy = as.numeric(prob2_df[["logic_xy"]])
 prob2_df$fac_xy = as.factor(prob2_df[["logic_xy"]])
 
-#In the data frame above, x and y are random samples of size 1000 from a standard normal distribution with mean = 0 and standard deviation = 1, logic_xy is a logical vector indicating whether the x + y > 0, num_xy is a numeric vector created by coercing the above logical vector and fac_xy is a factor vector created by coercing the above logical vector
+#In the data frame above:
+  #x and y are random samples of size 1000 from N(0,1).
+  #logic_xy is a logical vector indicating whether the x + y > 0.
+  #num_xy is a numeric vector created by coercing the logic vector into numeric.
+  #fac_xy is a factor vector created by coercing the logic vector to factor.
 ```
 
 
@@ -159,7 +167,7 @@ scatter_numeric = ggplot(prob2_df, aes(x = x, y = y, color= num_xy)) + geom_poin
 scatter_numeric
 ```
 
-The scatterplot produced using the numeric variable led to a range of colors being assigned to the color scheme in the scatterplot. This is because the numeric variable is continuous. The reason why we only see two colors in our plot is because our numeric variable only has two values (0/1).
+The scatterplot produced using the numeric variable led to a range of colors being assigned to the color scheme in the scatterplot. This is because the numeric variable is continuous. The reason why we only see two colors in our plot is because our numeric variable only has two values (0 or 1).
 
 ```{r scat_factor}
 
