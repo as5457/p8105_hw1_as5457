@@ -121,8 +121,6 @@ prob2_df = tibble(
   x = rnorm (1000, mean = 0, sd = 1),
   y = rnorm (1000, mean = 0, sd = 1),
   logic_xy = (x + y > 0)
-  #num_xy = as.numeric(prob2_df[["logic_xy"]]),
-  #fac_xy = as.factor(prob2_df[["logic_xy"]])
 )
 
 prob2_df$num_xy = as.numeric(prob2_df[["logic_xy"]])
