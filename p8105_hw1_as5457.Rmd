@@ -5,13 +5,26 @@ date: "September 18, 2018"
 output: html_document
 ---
 
+-------------------------------------------------------------------------------------
+
 # Problem 1
 
+**Create a data frame comprised of:**
 
-```{r random_sample}
+* A random sample of size 10 from a uniform[0, 5] distribution
+* A logical vector indicating whether elements of the sample are greater than 2
+* A (length-10) character vector
+* A (length-10) factor vector
+
+
+```{r prob1df}
+#Loading the relevant package
 library (tidyverse)
 
+#Setting the seed to ensure we get the same data every time we run the code
 set.seed(1)
+
+#Creating a new data frame called "prob1_df" that contains the variables specified in the prompt.
 
 prob1_df = tibble(
   rand_samp = runif(10, min = 0, max = 5),
@@ -20,67 +33,85 @@ prob1_df = tibble(
   vector_factor = factor(c('male', 'male', 'male', 'male', 'male', 'female', 'female', 'female', 'female', 'female'))
 )
 
-```
-```{r checking_classes}
-class(prob1_df$vector_logical)
-class(prob1_df$vector_char)
-class(prob1_df$vector_factor)
+#In the data frame above, rand_samp is a random sample of size 10 from a uniform[0, 5] distribution, vector_logical is indicating whether elements of the sample are greater than 2, vector_char is a 10 word long character variable and vector_factor is a variable containing 10 entries of the a factor variable, male or female. 
+
 ```
 
 
+**Try to take the mean of each variable in your dataframe. What works and what doesn’t? Why?**
 
-```{r eval=FALSE}
+```{r taking_means}
 
-data(prob1_df)
+set.seed(1)
+
+#The mean of the random sample is 2.76.
 mean(prob1_df[["rand_samp"]])
+
+#The mean of the logical vector is 0.60.
 mean(prob1_df[["vector_logical"]])
+
+#Unable to compute the mean of the character vector because it's not numeric or logical.
 mean(prob1_df[["vector_char"]])
+
+#Unable to compute the mean of the factor vector because it's not numeric or logical.
 mean(prob1_df[["vector_factor"]])
 
 ```
 
-When taking the means of the variables, I was able to retrieve means of the random sample and logical vector. The character and factor vectors did not retrieve means because they are neither numeric, nor logical. The mean function in R only takes the mean of numeric and logical vectors. Therefore, we were unable to compute the mean for the character and factor variables. 
+When taking the means of the variables, I was able to retrieve means of the random sample and logical vector. The character and factor vectors did not retrieve means because the mean function in R only takes the mean of numeric and logical vectors.  
 
 
 
-```{r eval = FALSE}
-data(prob1_df)
+
+**Write a code chunk that applies the as.numeric function to the logical, character, and factor variables (please show this chunk but not the output). What happens?**
+
+```{r numeric_conversion, eval = FALSE}
+
+#Converting the logical vector to a numeric vector.
 as.numeric(prob1_df[["vector_logical"]])
+
+#Converting the character vector to a numeric vector.
 as.numeric(prob1_df[["vector_char"]])
+
+#Converting the factor vector to a numeric vector.
 as.numeric(prob1_df[["vector_factor"]])
 ```
-When the logical vector was coerced into being numeric, the numeric conversion led to values that were false (<2) to be assigned a value of 0 and values that were true (>2) to be assigned a value of 1. 
 
-When the character vector was coerced into being numeric, the numeric conversion failed. This may be because there are no patterns in the character variables. 
+* When the logical vector was coerced into being numeric, the numeric conversion led to values that were false (<2) to be assigned a value of 0 and values that were true (>2) to be assigned a value of 1. 
+* When the character vector was coerced into being numeric, the numeric conversion failed. 
+* When the factor vector was coereced into being numeric, the conversion led to males being assigned a value of 2 and females being assigned a value of 1. 
 
-When the factor vector was coereced into being numeric, the conversion led to males being assigned a value of 2 and females being assigned a value of 1. 
+**In a second code chunk convert your character variable from character to factor to numeric; similarly, convert your factor variable from factor to character to numeric. What happens?**
 
-In a second code chunk convert your character variable from character to factor to numeric; similarly, convert your factor variable from factor to character to numeric. What happens?
+```{r double_conversions}
 
-```{r}
+#Converting the character variable to factor to numeric.
 as.numeric(as.factor(prob1_df[["vector_char"]]))
 
+#Converting the factor variable to character to numeric.
 as.numeric(as.character(prob1_df[["vector_factor"]]))
 ```
 
-When we converted character to factor to numeric, each variable was assigned a new number. 
-Second one doesn't work because we can't convert character to numeric. 
+* When we converted the character variable to factor to numeric, each character variable was assigned a new number. 
+* When we converted the factor variable to character to numeric, the conversion failed because as seen previously, R is unable to convert character variables to numeric. 
 
+-------------------------------------------------------------------------------------
 
 #Problem 2
 
-This problem focuses on plotting and the use of inline R code.
+**Create a data frame comprised of:**
 
-Create a data frame comprised of:
-x: a random sample of size 1000 from a standard Normal distribution
-y: a random sample of size 1000 from a standard Normal distribution
-A logical vector indicating whether the x + y > 0
-A numeric vector created by coercing the above logical vector
-A factor vector created by coercing the above logical vector
+* x: a random sample of size 1000 from a standard Normal distribution
+* y: a random sample of size 1000 from a standard Normal distribution
+* A logical vector indicating whether the x + y > 0
+* A numeric vector created by coercing the above logical vector
+* A factor vector created by coercing the above logical vector
 
-```{r}
+```{r prob2df}
+#Setting the seed to ensure reproducibility
 set.seed (1)
 
+#Creating data frame with the attributes specified in the prompt
 prob2_df = tibble(
   x = rnorm (1000, mean = 0, sd = 1),
   y = rnorm (1000, mean = 0, sd = 1),
@@ -91,34 +122,59 @@ prob2_df = tibble(
 
 prob2_df$num_xy = as.numeric(prob2_df[["logic_xy"]])
 prob2_df$fac_xy = as.factor(prob2_df[["logic_xy"]])
+
+#In the data frame above, x and y are random samples of size 1000 from a standard normal distribution with mean = 0 and standard deviation = 1, logic_xy is a logical vector indicating whether the x + y > 0, num_xy is a numeric vector created by coercing the above logical vector and fac_xy is a factor vector created by coercing the above logical vector
 ```
 
-##Write a short description of your vector using inline R code, including: the size of the dataset, the mean and median of x, the proportion of cases for which the logical vector is true.
+
+
+**Write a short description of your vector using inline R code, including: the size of the dataset, the mean and median of x, the proportion of cases for which the logical vector is true.**
 
 The number of rows in this data frame is `r nrow(prob2_df)` and the number of columns in this data frame is `r ncol(prob2_df)`. The mean of the variable x is `r mean(prob2_df[["x"]])` and median of variable x is `r median(prob2_df$x)`. The proportion of cases for which the logical vector is true is `r mean(prob2_df$num_xy)`.
 
 
-##Make a scatterplot of y vs x; color points using the logical variable (adding color = ... inside of aes in your ggplot code should help). Make a second and third scatterplot that color points using the numeric and factor variables, respectively, and comment on the color scales.
+**Make a scatterplot of y vs x; color points using the logical variable (adding color = ... inside of aes in your ggplot code should help).**
 
-```{r}
+```{r scat_logic}
+
+#Loading the ggplot2 package
 library(ggplot2)
-color_xy = ggplot(prob2_df, aes(x = x, y = y, color= logic_xy)) + geom_point()
-color_xy
+
+#Creating the first scatterplot and calling it scatter_logic
+scatter_logic = ggplot(prob2_df, aes(x = x, y = y, color= logic_xy)) + geom_point()
+#viewing the scatterplot
+scatter_logic
 
 ```
 
-```{r}
-color_numeric = ggplot(prob2_df, aes(x = x, y = y, color= num_xy)) + geom_point()
-color_numeric
-color_factor = ggplot(prob2_df, aes(x = x, y = y, color= fac_xy)) + geom_point()
-color_factor
+The scatterplot produced using the logic variable has two colors because we have two distinct values in our logic variable (true/false).
+
+**Make a second and third scatterplot that color points using the numeric and factor variables, respectively, and comment on the color scales.**
+
+```{r scat_numeric}
+
+#creating the second scatterplot and calling it scatter_numeric
+scatter_numeric = ggplot(prob2_df, aes(x = x, y = y, color= num_xy)) + geom_point()
+#viewing the scatterplot
+scatter_numeric
 ```
 
+The scatterplot produced using the numeric variable led to a range of colors being assigned to the color scheme in the scatterplot. This is because the numeric variable is continuous. The reason why we only see two colors in our plot is because our numeric variable only has two values (0/1).
 
-Exporting first scatterplot using ggsave.
+```{r scat_factor}
 
-```{r}
-ggsave("scatter_plot.pdf", plot = color_xy)
+#creating the third scatterplot and calling it scatter_factor
+scatter_factor = ggplot(prob2_df, aes(x = x, y = y, color= fac_xy)) + geom_point()
+#viewing the scatterplot
+scatter_factor
+```
+
+The scatterplot produced using the factor variable has two colors for the two values (true/false). This is similar to the scatterplot produced using the logic variable. 
+
+**Export your first scatterplot to your project directory using ggsave.**
+
+```{r export_scatter}
+ggsave("scatter_plot.pdf", plot = scatter_logic)
 ```
 
 
